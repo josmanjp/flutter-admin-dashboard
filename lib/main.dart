@@ -1,3 +1,5 @@
+import 'package:admin_dashboard/ui/layouts/dashboard/dashboard_layout.dart';
+import 'package:admin_dashboard/ui/layouts/splash/splash_layout.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -26,7 +28,12 @@ class _AppStateState extends State<AppState> {
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
-      providers: [ChangeNotifierProvider(create: (_) => AuthProvider())],
+      providers: [
+        ChangeNotifierProvider(
+          lazy: false, //inmediatamente empieza la autentificacion
+          create: (_) => AuthProvider(),
+        ),
+      ],
       child: const MyApp(),
     );
   }
@@ -44,7 +51,17 @@ class MyApp extends StatelessWidget {
       onGenerateRoute: Flurorouter.router.generator,
       navigatorKey: NavigationServices.navigatorKey,
       builder: (_, child) {
-        return AuthLayout(child: child!);
+        final authProvider = Provider.of<AuthProvider>(context);
+
+        if (authProvider.authStatus == AuthStatus.checking)
+          // ignore: curly_braces_in_flow_control_structures
+          return const Scaffold(body: SplashLayout());
+
+        if (authProvider.authStatus == AuthStatus.authenticated) {
+          return DashboardLayout(child: child!);
+        } else {
+          return AuthLayout(child: child!);
+        }
       },
       theme: ThemeData.light().copyWith(
         scrollbarTheme: ScrollbarThemeData().copyWith(
