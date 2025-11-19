@@ -27,6 +27,7 @@ class DashboardLayout extends StatelessWidget {
                 authProvider.logout();
               },
             ),
+            Expanded(child: child), //muestra la vista correspondiente
           ], //children
         ),
       ),

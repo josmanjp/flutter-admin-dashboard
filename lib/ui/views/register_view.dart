@@ -11,21 +11,23 @@ import 'package:provider/provider.dart';
 class RegisterView extends StatelessWidget {
   const RegisterView({super.key});
 
-  
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      
-      create: ( _) => RegisterFormProvider(),
+      create: (_) => RegisterFormProvider(),
 
-      child: Builder(builder: (context)  {
-         final registerFormProvider = Provider.of<RegisterFormProvider>(context, listen: false);
+      child: Builder(
+        builder: (context) {
+          final registerFormProvider = Provider.of<RegisterFormProvider>(
+            context,
+            listen: false,
+          );
           return Container(
-            margin: EdgeInsets.only(top: 100),
-            padding: EdgeInsets.symmetric( horizontal: 20 ),
+            margin: EdgeInsets.only(top: 50),
+            padding: EdgeInsets.symmetric(horizontal: 20),
             child: Center(
               child: ConstrainedBox(
-                constraints: BoxConstraints( maxWidth: 370 ),
+                constraints: BoxConstraints(maxWidth: 370),
                 child: Form(
                   autovalidateMode: AutovalidateMode.onUserInteraction,
                   key: registerFormProvider.formKey,
@@ -33,54 +35,59 @@ class RegisterView extends StatelessWidget {
                     children: [
                       // Email
                       TextFormField(
-                        onChanged: (value) => registerFormProvider.updateNombre(value),
+                        onChanged: (value) =>
+                            registerFormProvider.updateNombre(value),
                         validator: (value) {
                           if (value == null || value.isEmpty) {
                             return 'Por favor ingrese un nombre';
                           }
-                          if (value.length <5 ) {
+                          if (value.length < 5) {
                             return 'El nombre debe tener al menos 5 caracteres';
                           }
 
                           return null;
                         },
-                        style: TextStyle( color: Colors.white ),
+                        style: TextStyle(color: Colors.white),
                         decoration: CustomInputs.loginInputDecoration(
                           hint: 'Ingrese su nombre',
                           label: 'Nombre',
-                          icon: Icons.supervised_user_circle_sharp
+                          icon: Icons.supervised_user_circle_sharp,
                         ),
                       ),
 
-                      SizedBox( height: 20 ),
-                      
+                      SizedBox(height: 20),
+
                       // Email
                       TextFormField(
-                        onChanged: (value) => registerFormProvider.updateEmail(value),
+                        onChanged: (value) =>
+                            registerFormProvider.updateEmail(value),
                         validator: (value) {
                           if (value == null || value.isEmpty) {
                             return 'Por favor ingrese un email';
                           }
-                          if (!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$').hasMatch(value)) {
+                          if (!RegExp(
+                            r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$',
+                          ).hasMatch(value)) {
                             return 'Por favor ingrese un email válido';
                           }
                           return null;
                         },
 
-                        style: TextStyle( color: Colors.white ),
+                        style: TextStyle(color: Colors.white),
                         decoration: CustomInputs.loginInputDecoration(
                           hint: 'Ingrese su correo',
                           label: 'Email',
-                          icon: Icons.email_outlined
+                          icon: Icons.email_outlined,
                         ),
                       ),
 
-                      SizedBox( height: 20 ),
+                      SizedBox(height: 20),
 
                       // Password
                       TextFormField(
-                        onChanged: (value) => registerFormProvider.updatePassword(value),
-                        validator:  ( value ) {
+                        onChanged: (value) =>
+                            registerFormProvider.updatePassword(value),
+                        validator: (value) {
                           String pattern =
                               r'^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$';
                           RegExp regex = RegExp(pattern);
@@ -90,48 +97,40 @@ class RegisterView extends StatelessWidget {
                             return 'La contraseña debe tener al menos 8 caracteres, incluyendo letras y números';
                           }
                           return null;
-                      },
+                        },
 
                         obscureText: true,
-                        style: TextStyle( color: Colors.white ),
+                        style: TextStyle(color: Colors.white),
                         decoration: CustomInputs.loginInputDecoration(
                           hint: '*********',
                           label: 'Contraseña',
-                          icon: Icons.lock_outline_rounded
+                          icon: Icons.lock_outline_rounded,
                         ),
                       ),
-                      
-                      SizedBox( height: 20 ),
+
+                      SizedBox(height: 20),
                       CustomOutlinedButton(
                         onPressed: () {
                           registerFormProvider.validateForm();
-                        }, 
+                        },
                         text: 'Crear cuenta',
                       ),
 
-
-                      SizedBox( height: 20 ),
+                      SizedBox(height: 20),
                       LinkText(
                         text: 'Ir al login',
                         onPressed: () {
-                          Navigator.pushNamed(context, Flurorouter.loginRoute );
+                          Navigator.pushNamed(context, Flurorouter.loginRoute);
                         },
-                      )
-
+                      ),
                     ],
-                  )
+                  ),
                 ),
               ),
             ),
-          );    
-    
-     }
-     )
+          );
+        },
+      ),
     );
-
-
-
   }
-
-  
 }
