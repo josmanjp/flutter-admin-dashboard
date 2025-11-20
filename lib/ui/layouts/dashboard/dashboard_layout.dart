@@ -21,16 +21,6 @@ class DashboardLayout extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  CustomOutlinedButton(
-                    text: 'Salir',
-                    onPressed: () {
-                      final authProvider = Provider.of<AuthProvider>(
-                        context,
-                        listen: false,
-                      );
-                      authProvider.logout();
-                    },
-                  ),
                   SizedBox(height: 10),
                   Expanded(child: child), //muestra la vista correspondiente
                 ], //children
