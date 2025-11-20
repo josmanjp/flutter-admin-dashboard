@@ -1,5 +1,6 @@
 import 'package:admin_dashboard/providers/auth_provider.dart';
 import 'package:admin_dashboard/ui/buttons/custom_outlined_button.dart';
+import 'package:admin_dashboard/ui/shared/sidebar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -11,24 +12,31 @@ class DashboardLayout extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Color(0xffEDF1F2),
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+        child: Row(
           children: [
-            Text('Dashboard Layout', style: TextStyle(fontSize: 50)),
-            SizedBox(height: 20),
-            CustomOutlinedButton(
-              text: 'Salir',
-              onPressed: () {
-                final authProvider = Provider.of<AuthProvider>(
-                  context,
-                  listen: false,
-                );
-                authProvider.logout();
-              },
+            Sidebar(),
+            Expanded(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  CustomOutlinedButton(
+                    text: 'Salir',
+                    onPressed: () {
+                      final authProvider = Provider.of<AuthProvider>(
+                        context,
+                        listen: false,
+                      );
+                      authProvider.logout();
+                    },
+                  ),
+                  SizedBox(height: 10),
+                  Expanded(child: child), //muestra la vista correspondiente
+                ], //children
+              ),
             ),
-            Expanded(child: child), //muestra la vista correspondiente
-          ], //children
+          ],
         ),
       ),
     );
