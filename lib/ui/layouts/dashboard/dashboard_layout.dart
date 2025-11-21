@@ -1,5 +1,6 @@
 import 'package:admin_dashboard/providers/auth_provider.dart';
 import 'package:admin_dashboard/ui/buttons/custom_outlined_button.dart';
+import 'package:admin_dashboard/ui/shared/navbar.dart';
 import 'package:admin_dashboard/ui/shared/sidebar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -17,10 +18,14 @@ class DashboardLayout extends StatelessWidget {
         child: Row(
           children: [
             Sidebar(),
+
             Expanded(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
+                  //navbar
+                  Navbar(),
+
                   SizedBox(height: 10),
                   Expanded(child: child), //muestra la vista correspondiente
                 ], //children
