@@ -1,4 +1,5 @@
 import 'package:admin_dashboard/providers/auth_provider.dart';
+import 'package:admin_dashboard/providers/side_menu_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:admin_dashboard/ui/shared/widgets/logo.dart';
 import 'package:admin_dashboard/ui/shared/widgets/text_separator.dart';
@@ -26,6 +27,7 @@ class Sidebar extends StatelessWidget {
             icon: Icons.compass_calibration_outlined,
             isActive: false,
             onPressed: () {
+              SideMenuProvider.closeMenu();
               print('Dashboard presionado');
             },
           ),
