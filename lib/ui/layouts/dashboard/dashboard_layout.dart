@@ -1,3 +1,4 @@
+import 'package:admin_dashboard/providers/side_menu_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:admin_dashboard/providers/auth_provider.dart';
@@ -5,10 +6,25 @@ import 'package:admin_dashboard/ui/buttons/custom_outlined_button.dart';
 import 'package:admin_dashboard/ui/shared/navbar.dart';
 import 'package:admin_dashboard/ui/shared/sidebar.dart';
 
-class DashboardLayout extends StatelessWidget {
+class DashboardLayout extends StatefulWidget {
   final Widget child;
 
   const DashboardLayout({super.key, required this.child});
+
+  @override
+  State<DashboardLayout> createState() => _DashboardLayoutState();
+}
+
+class _DashboardLayoutState extends State<DashboardLayout>
+    with SingleTickerProviderStateMixin {
+  @override
+  void initState() {
+    super.initState();
+    SideMenuProvider.menuController = AnimationController(
+      vsync: this,
+      duration: Duration(milliseconds: 300),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -30,14 +46,27 @@ class DashboardLayout extends StatelessWidget {
                       Navbar(),
 
                       SizedBox(height: 10),
-                      Expanded(child: child), //muestra la vista correspondiente
+                      Expanded(
+                        child: widget.child,
+                      ), //muestra la vista correspondiente
                     ], //children
                   ),
                 ),
               ],
             ),
 
-            if (size.width < 700) Sidebar(),
+            if (size.width < 700)
+              AnimatedBuilder(
+                animation: SideMenuProvider.menuController,
+                builder: (context, _) => Stack(
+                  children: [
+                    Transform.translate(
+                      offset: Offset(SideMenuProvider.movement.value, 0),
+                      child: Sidebar(),
+                    ),
+                  ],
+                ),
+              ),
           ],
         ),
       ),

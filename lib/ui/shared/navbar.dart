@@ -1,3 +1,4 @@
+import 'package:admin_dashboard/providers/side_menu_provider.dart';
 import 'package:admin_dashboard/ui/shared/sidebar.dart';
 import 'package:admin_dashboard/ui/shared/widgets/navbar_avatar.dart';
 import 'package:flutter/material.dart';
@@ -24,7 +25,9 @@ class Navbar extends StatelessWidget {
                 foregroundColor: Colors.black, // Color de fondo
                 overlayColor: Colors.transparent, // Elimina el efecto de splash
               ),
-              onPressed: () {},
+              onPressed: () {
+                SideMenuProvider.openMenu();
+              },
             ),
 
           SizedBox(width: 5),
