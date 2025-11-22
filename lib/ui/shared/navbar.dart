@@ -1,3 +1,4 @@
+import 'package:admin_dashboard/ui/shared/sidebar.dart';
 import 'package:admin_dashboard/ui/shared/widgets/navbar_avatar.dart';
 import 'package:flutter/material.dart';
 import 'package:admin_dashboard/ui/shared/widgets/search_text.dart';
@@ -8,26 +9,31 @@ class Navbar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
     return Container(
       height: 50,
       width: double.infinity,
       decoration: builBoxDecoration(),
       child: Row(
         children: [
-          IconButton(
-            icon: Icon(Icons.menu_outlined),
-            style: IconButton.styleFrom(
-              backgroundColor: Colors.transparent,
-              foregroundColor: Colors.black, // Color de fondo
-              overlayColor: Colors.transparent, // Elimina el efecto de splash
+          if (size.width <= 700)
+            IconButton(
+              icon: Icon(Icons.menu_outlined),
+              style: IconButton.styleFrom(
+                backgroundColor: Colors.transparent,
+                foregroundColor: Colors.black, // Color de fondo
+                overlayColor: Colors.transparent, // Elimina el efecto de splash
+              ),
+              onPressed: () {},
             ),
-            onPressed: () {},
-          ),
+
           SizedBox(width: 5),
-          ConstrainedBox(
-            constraints: BoxConstraints(maxWidth: 250),
-            child: SearchText(),
-          ),
+
+          if (size.width > 400)
+            ConstrainedBox(
+              constraints: BoxConstraints(maxWidth: 250),
+              child: SearchText(),
+            ),
 
           Spacer(),
           NotificationsIndicator(),

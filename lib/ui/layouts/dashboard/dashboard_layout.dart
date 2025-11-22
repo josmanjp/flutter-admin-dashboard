@@ -1,9 +1,9 @@
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:admin_dashboard/providers/auth_provider.dart';
 import 'package:admin_dashboard/ui/buttons/custom_outlined_button.dart';
 import 'package:admin_dashboard/ui/shared/navbar.dart';
 import 'package:admin_dashboard/ui/shared/sidebar.dart';
-import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 class DashboardLayout extends StatelessWidget {
   final Widget child;
@@ -12,25 +12,32 @@ class DashboardLayout extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
     return Scaffold(
       backgroundColor: Color(0xffEDF1F2),
       body: Center(
-        child: Row(
+        child: Stack(
           children: [
-            Sidebar(),
+            Row(
+              children: [
+                if (size.width >= 700) Sidebar(),
 
-            Expanded(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  //navbar
-                  Navbar(),
+                Expanded(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      //navbar
+                      Navbar(),
 
-                  SizedBox(height: 10),
-                  Expanded(child: child), //muestra la vista correspondiente
-                ], //children
-              ),
+                      SizedBox(height: 10),
+                      Expanded(child: child), //muestra la vista correspondiente
+                    ], //children
+                  ),
+                ),
+              ],
             ),
+
+            if (size.width < 700) Sidebar(),
           ],
         ),
       ),
