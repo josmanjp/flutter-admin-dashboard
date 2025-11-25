@@ -47,7 +47,13 @@ class _DashboardLayoutState extends State<DashboardLayout>
 
                       SizedBox(height: 10),
                       Expanded(
-                        child: widget.child,
+                        child: Padding(
+                          padding: EdgeInsets.symmetric(
+                            horizontal: 20,
+                            vertical: 10,
+                          ),
+                          child: widget.child,
+                        ),
                       ), //muestra la vista correspondiente
                     ], //children
                   ),
