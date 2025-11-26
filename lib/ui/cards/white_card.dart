@@ -1,16 +1,19 @@
 import 'package:flutter/material.dart';
 
 class WhiteCard extends StatelessWidget {
-  const WhiteCard({super.key, this.title, required this.child});
+  const WhiteCard({super.key, required this.child, this.width, this.title});
   final String? title;
+  final double? width;
   final Widget child;
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.all(0),
-      padding: EdgeInsets.all(10),
+      margin: EdgeInsets.all(5),
+      padding: EdgeInsets.all(5),
       decoration: buildBoxDecoration(),
+      // ignore: prefer_if_null_operators
+      width: width != null ? width : null,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

@@ -1,5 +1,7 @@
 import 'package:admin_dashboard/providers/auth_provider.dart';
 import 'package:admin_dashboard/providers/side_menu_provider.dart';
+import 'package:admin_dashboard/router/router.dart';
+import 'package:admin_dashboard/services/navigation_services.dart';
 import 'package:flutter/material.dart';
 import 'package:admin_dashboard/ui/shared/widgets/logo.dart';
 import 'package:admin_dashboard/ui/shared/widgets/text_separator.dart';
@@ -8,6 +10,11 @@ import 'package:provider/provider.dart';
 
 class Sidebar extends StatelessWidget {
   const Sidebar({super.key});
+
+  void navigateTo(String routeName) {
+    NavigationServices.navigateTo(routeName);
+    SideMenuProvider.closeMenu();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +34,7 @@ class Sidebar extends StatelessWidget {
             icon: Icons.compass_calibration_outlined,
             isActive: false,
             onPressed: () {
-              SideMenuProvider.closeMenu();
+              navigateTo(Flurorouter.dashboardRoute);
               print('Dashboard presionado');
             },
           ),
@@ -67,7 +74,9 @@ class Sidebar extends StatelessWidget {
           MenuItem(
             text: 'Icons',
             icon: Icons.list_alt_outlined,
-            onPressed: () {},
+            onPressed: () {
+              navigateTo(Flurorouter.iconsRoute);
+            },
           ),
           MenuItem(
             text: 'Marketing',
@@ -75,7 +84,7 @@ class Sidebar extends StatelessWidget {
             onPressed: () {},
           ),
           MenuItem(
-            text: 'Campaing',
+            text: 'Campaign',
             icon: Icons.campaign_outlined,
             onPressed: () {},
           ),
@@ -84,6 +93,9 @@ class Sidebar extends StatelessWidget {
             icon: Icons.post_add_outlined,
             onPressed: () {},
           ),
+
+          SizedBox(height: 15),
+          TextSeparator(text: 'Exit'),
           MenuItem(
             text: 'Logout',
             icon: Icons.exit_to_app_outlined,
