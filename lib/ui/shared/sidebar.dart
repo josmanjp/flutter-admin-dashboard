@@ -18,6 +18,9 @@ class Sidebar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final SideMenuProvider sideMenuProvider = Provider.of<SideMenuProvider>(
+      context,
+    );
     return Container(
       width: 200,
       height: double.infinity,
@@ -30,9 +33,10 @@ class Sidebar extends StatelessWidget {
           TextSeparator(text: 'Main'),
           // ... Opciones del menú
           MenuItem(
+            isActive:
+                sideMenuProvider.currentPage == Flurorouter.dashboardRoute,
             text: 'Dashboard',
             icon: Icons.compass_calibration_outlined,
-            isActive: false,
             onPressed: () {
               navigateTo(Flurorouter.dashboardRoute);
               print('Dashboard presionado');
@@ -72,6 +76,7 @@ class Sidebar extends StatelessWidget {
           SizedBox(height: 15),
           TextSeparator(text: 'UI Elements'),
           MenuItem(
+            isActive: sideMenuProvider.currentPage == Flurorouter.iconsRoute,
             text: 'Icons',
             icon: Icons.list_alt_outlined,
             onPressed: () {
