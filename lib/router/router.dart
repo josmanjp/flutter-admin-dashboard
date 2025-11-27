@@ -14,6 +14,7 @@ class Flurorouter {
   //Dashboard router
   static String dashboardRoute = '/dashboard';
   static String iconsRoute = '/dashboard/icons';
+  static String blankRoute = '/dashboard/blank';
 
   static void configureRoutes() {
     //auth routes
@@ -43,6 +44,12 @@ class Flurorouter {
     router.define(
       iconsRoute,
       handler: DashboardHandlers.icons,
+      transitionType: TransitionType.none,
+    );
+
+    router.define(
+      blankRoute,
+      handler: DashboardHandlers.blank,
       transitionType: TransitionType.none,
     );
 

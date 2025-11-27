@@ -1,8 +1,5 @@
 import 'package:admin_dashboard/providers/side_menu_provider.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:admin_dashboard/providers/auth_provider.dart';
-import 'package:admin_dashboard/ui/buttons/custom_outlined_button.dart';
 import 'package:admin_dashboard/ui/shared/navbar.dart';
 import 'package:admin_dashboard/ui/shared/sidebar.dart';
 

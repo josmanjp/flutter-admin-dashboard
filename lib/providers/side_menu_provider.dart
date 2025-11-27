@@ -6,15 +6,13 @@ class SideMenuProvider extends ChangeNotifier {
   String _currentPage = '';
 
   String get currentPage => _currentPage;
-  
+
   void setCurrentPageUrl(String routeName) {
     _currentPage = routeName;
     Future.delayed(Duration(milliseconds: 100), () {
       notifyListeners();
-    }); 
-    
+    });
   }
-
 
   static Animation<double> movement = Tween<double>(
     begin: -200,

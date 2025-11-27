@@ -33,70 +33,80 @@ class Sidebar extends StatelessWidget {
           TextSeparator(text: 'Main'),
           // ... Opciones del menú
           MenuItem(
-            isActive:
-                sideMenuProvider.currentPage == Flurorouter.dashboardRoute,
             text: 'Dashboard',
             icon: Icons.compass_calibration_outlined,
             onPressed: () {
               navigateTo(Flurorouter.dashboardRoute);
-              print('Dashboard presionado');
             },
+            isActive:
+                sideMenuProvider.currentPage == Flurorouter.dashboardRoute,
           ),
 
           MenuItem(
             text: 'Orders',
             icon: Icons.shopping_cart_outlined,
             onPressed: () {},
+            isActive: sideMenuProvider.currentPage == '/dashboard/orders',
           ),
           MenuItem(
             text: 'Analytics',
             icon: Icons.show_chart_outlined,
             onPressed: () {},
+            isActive: sideMenuProvider.currentPage == '/dashboard/analytics',
           ),
           MenuItem(
             text: 'Categories',
             icon: Icons.category_outlined,
             onPressed: () {},
+            isActive: sideMenuProvider.currentPage == '/dashboard/categories',
           ),
           MenuItem(
             text: 'Products',
             icon: Icons.dashboard_outlined,
             onPressed: () {},
+            isActive: sideMenuProvider.currentPage == '/dashboard/products',
           ),
           MenuItem(
             text: 'Discounts',
             icon: Icons.discount_outlined,
             onPressed: () {},
+            isActive: sideMenuProvider.currentPage == '/dashboard/discounts',
           ),
           MenuItem(
             text: 'Customers',
             icon: Icons.people_outline,
             onPressed: () {},
+            isActive: sideMenuProvider.currentPage == '/dashboard/customers',
           ),
           SizedBox(height: 15),
           TextSeparator(text: 'UI Elements'),
           MenuItem(
-            isActive: sideMenuProvider.currentPage == Flurorouter.iconsRoute,
             text: 'Icons',
             icon: Icons.list_alt_outlined,
             onPressed: () {
               navigateTo(Flurorouter.iconsRoute);
             },
+            isActive: sideMenuProvider.currentPage == Flurorouter.iconsRoute,
           ),
           MenuItem(
             text: 'Marketing',
             icon: Icons.mark_email_read_outlined,
             onPressed: () {},
+            isActive: sideMenuProvider.currentPage == '/dashboard/marketing',
           ),
           MenuItem(
             text: 'Campaign',
             icon: Icons.campaign_outlined,
             onPressed: () {},
+            isActive: sideMenuProvider.currentPage == '/dashboard/campaign',
           ),
           MenuItem(
             text: 'Blank Page',
             icon: Icons.post_add_outlined,
-            onPressed: () {},
+            onPressed: () {
+              navigateTo(Flurorouter.blankRoute);
+            },
+            isActive: sideMenuProvider.currentPage == Flurorouter.blankRoute,
           ),
 
           SizedBox(height: 15),
@@ -111,6 +121,7 @@ class Sidebar extends StatelessWidget {
               );
               authProvider.logout();
             },
+            isActive: false, // Logout nunca debe estar activo
           ),
           SizedBox(height: 30),
         ],
