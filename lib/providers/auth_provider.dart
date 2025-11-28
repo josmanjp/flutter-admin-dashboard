@@ -1,3 +1,6 @@
+// ignore_for_file: avoid_print
+
+import 'package:admin_dashboard/api/cafe_api.dart';
 import 'package:admin_dashboard/services/local_storage.dart';
 import 'package:admin_dashboard/router/router.dart';
 import 'package:admin_dashboard/services/navigation_services.dart';
@@ -8,6 +11,8 @@ enum AuthStatus { checking, authenticated, notAuthenticated }
 class AuthProvider extends ChangeNotifier {
   // Aquí puedes agregar la lógica de autenticación
   String? _token;
+  String? _nameUser;
+
   AuthStatus authStatus = AuthStatus.checking;
 
   AuthProvider() {
@@ -25,6 +30,31 @@ class AuthProvider extends ChangeNotifier {
     notifyListeners();
 
     NavigationServices.replaceTo(Flurorouter.dashboardRoute);
+  }
+
+  register(String email, String password, String name) {
+    //TODO: implementar lógica de registro
+
+    final data = {'correo': email, 'password': password, 'nombre': name};
+
+    CafeApi.httpPost('/usuarios', data)
+        .then((json) {
+          _token = json['token'];
+          _nameUser = json['usuario']['nombre'];
+          LocalStorage.prefs.setString('token', _token!);
+          LocalStorage.prefs.setString('nameUser', _nameUser!);
+
+          LocalStorage.prefs.getString('token');
+          LocalStorage.prefs.getString('nameUser');
+
+          authStatus = AuthStatus.authenticated;
+          notifyListeners();
+          NavigationServices.replaceTo(Flurorouter.dashboardRoute);
+        })
+        .catchError((e) {
+          print('Error en el registro: $e');
+          //TODO: manejar el error de registro
+        });
   }
 
   logout() {

@@ -1,20 +1,23 @@
 import 'package:flutter/material.dart';
 
 class RegisterFormProvider extends ChangeNotifier {
+  GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
-  GlobalKey <FormState> formKey = GlobalKey<FormState>();
-
-  String nombre= '';
-  String email    = '';
+  String nombre = '';
+  String email = '';
   String password = '';
 
-  validateForm(){
-    if (formKey.currentState?.validate() ?? false) {
+  validateForm() {
+    if (formKey.currentState!.validate()) {
       // Formulario válido
       print('Email: $email');
       print('Nombre: $nombre');
       print('Password: $password');
       // Aquí puedes agregar lógica de login
+      return true;
+    } else {
+      print('Formulario no válido');
+      return false;
     }
   }
 
@@ -22,6 +25,7 @@ class RegisterFormProvider extends ChangeNotifier {
     nombre = value;
     notifyListeners();
   }
+
   void updateEmail(String value) {
     email = value;
     notifyListeners();
@@ -31,6 +35,4 @@ class RegisterFormProvider extends ChangeNotifier {
     password = value;
     notifyListeners();
   }
-
-  
 }
