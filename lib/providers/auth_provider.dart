@@ -3,17 +3,18 @@
 import 'package:admin_dashboard/api/cafe_api.dart';
 import 'package:admin_dashboard/services/local_storage.dart';
 import 'package:admin_dashboard/router/router.dart';
-import 'package:admin_dashboard/services/navigation_services.dart';
+import 'package:admin_dashboard/services/notifications_service.dart';
 import 'package:flutter/material.dart';
+import 'package:admin_dashboard/models/http/auth_response.dart';
+import 'package:admin_dashboard/services/navigation_services.dart';
 
 enum AuthStatus { checking, authenticated, notAuthenticated }
 
 class AuthProvider extends ChangeNotifier {
   // Aquí puedes agregar la lógica de autenticación
   String? _token;
-  String? _nameUser;
-
   AuthStatus authStatus = AuthStatus.checking;
+  Usuario? user;
 
   AuthProvider() {
     //Al iniciar el provider, verificar si está autenticado
@@ -39,21 +40,21 @@ class AuthProvider extends ChangeNotifier {
 
     CafeApi.httpPost('/usuarios', data)
         .then((json) {
-          _token = json['token'];
-          _nameUser = json['usuario']['nombre'];
-          LocalStorage.prefs.setString('token', _token!);
-          LocalStorage.prefs.setString('nameUser', _nameUser!);
+          final authResponse = AuthResponse.fromMap(json);
+          this.user = authResponse.usuario;
+          _token = authResponse.token;
 
+          LocalStorage.prefs.setString('token', _token!);
+          LocalStorage.prefs.setString('nameUser', this.user!.nombre);
           LocalStorage.prefs.getString('token');
           LocalStorage.prefs.getString('nameUser');
-
           authStatus = AuthStatus.authenticated;
-          notifyListeners();
           NavigationServices.replaceTo(Flurorouter.dashboardRoute);
+          notifyListeners();
         })
         .catchError((e) {
-          print('Error en el registro: $e');
-          //TODO: manejar el error de registro
+          //print('Error en el registro: $e');
+          NotificationsService.ShowSnackBarError('Error en el registro: $e');
         });
   }
 
