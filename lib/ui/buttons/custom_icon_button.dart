@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 class CustomIconButton extends StatelessWidget {
   final Function onPressed;
   final IconData icon;
-  final String tooltip;
   final String text;
   final bool isFilled;
   final Color color;
@@ -13,7 +12,6 @@ class CustomIconButton extends StatelessWidget {
     required this.onPressed,
     required this.text,
     required this.icon,
-    this.tooltip = '',
     this.isFilled = false,
     this.color = Colors.blueAccent,
   });

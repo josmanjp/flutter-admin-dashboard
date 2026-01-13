@@ -15,40 +15,37 @@ class _CategoriesViewState extends State<CategoriesView> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: ListView(
-        physics: ClampingScrollPhysics(),
+    return ListView(
+      physics: const ClampingScrollPhysics(),
+      children: [
+        Text('Categories View', style: CustomLabels.h1),
+        const SizedBox(height: 10),
+        PaginatedDataTable(
+          showCheckboxColumn: false,
+          columns: [
+            DataColumn(label: Text('ID')),
+            DataColumn(label: Text('Category Name')),
+            DataColumn(label: Text('Creado Por')),
+            DataColumn(label: Text('Actions')),
+          ],
+          source: CategoriesDTS(),
+          header: Text('Categories Available', maxLines: 2),
 
-        children: [
-          Text('Categories View', style: CustomLabels.h1),
-          SizedBox(height: 10),
-          PaginatedDataTable(
-            showCheckboxColumn: false,
-            columns: [
-              DataColumn(label: Text('ID')),
-              DataColumn(label: Text('Category Name')),
-              DataColumn(label: Text('Creado Por')),
-              DataColumn(label: Text('Actions')),
-            ],
-            source: CategoriesDTS(),
-            header: Text('Categories Available', maxLines: 2),
-            onRowsPerPageChanged: (value) {
-              setState(() {
-                _rowsPerPage = value ?? 10;
-              });
-            },
-            rowsPerPage: _rowsPerPage,
-            actions: [
-              CustomIconButton(
-                onPressed: () {},
-                icon: Icons.add_outlined,
-                tooltip: 'Add New Category',
-                text: 'Add New',
-              ),
-            ],
-          ),
-        ],
-      ),
+          onRowsPerPageChanged: (value) {
+            setState(() {
+              _rowsPerPage = value ?? 10;
+            });
+          },
+          rowsPerPage: _rowsPerPage,
+          actions: [
+            CustomIconButton(
+              onPressed: () {},
+              icon: Icons.add_outlined,
+              text: 'Add New',
+            ),
+          ],
+        ),
+      ],
     );
   }
 }
