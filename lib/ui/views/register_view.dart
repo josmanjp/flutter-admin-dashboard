@@ -36,6 +36,8 @@ class RegisterView extends StatelessWidget {
                     children: [
                       // Email
                       TextFormField(
+                        onFieldSubmitted: (value) =>
+                            registerFormProvider.validateForm(),
                         onChanged: (value) =>
                             registerFormProvider.updateNombre(value),
                         validator: (value) {
@@ -60,6 +62,8 @@ class RegisterView extends StatelessWidget {
 
                       // Email
                       TextFormField(
+                        onFieldSubmitted: (value) =>
+                            registerFormProvider.validateForm(),
                         onChanged: (value) =>
                             registerFormProvider.updateEmail(value),
                         validator: (value) {
@@ -86,6 +90,8 @@ class RegisterView extends StatelessWidget {
 
                       // Password
                       TextFormField(
+                        onFieldSubmitted: (value) =>
+                            registerFormProvider.validateForm(),
                         onChanged: (value) =>
                             registerFormProvider.updatePassword(value),
                         validator: (value) {

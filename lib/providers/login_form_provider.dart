@@ -20,8 +20,8 @@ class LoginFormProvider extends ChangeNotifier {
     //TODO: implementar validaciones
     if (formKey.currentState?.validate() ?? false) {
       // Formulario válido
-      print('Email: $email');
-      print('Password: $password');
+     // print('Email: $email');
+      //print('Password: $password');
       // Aquí puedes agregar lógica de login
       authProvider.login(email, password);
     }

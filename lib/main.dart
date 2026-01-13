@@ -74,9 +74,20 @@ class MyApp extends StatelessWidget {
         scrollbarTheme: ScrollbarThemeData().copyWith(
           thumbColor: WidgetStateProperty.all(
             Colors.grey[400]?.withValues(alpha: 0.5),
-          ),
+          ), //color de la barra
+        ), //scrollbar
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: Color(0xff090909),
+          primary: Color(0xff090909),
+          secondary: Color(0xff1E88E5),
+          surface: Colors.white,
         ),
-      ),
+        cardTheme: const CardThemeData(
+          color: Colors.white, // Obliga a las tarjetas (y tablas) a ser blancas
+          surfaceTintColor:
+              Colors.transparent, // Elimina el tinte morado de elevación
+        ),
+      ), //tema general de la app
     );
   }
 }

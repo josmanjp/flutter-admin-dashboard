@@ -22,15 +22,29 @@ class AuthProvider extends ChangeNotifier {
   }
 
   login(String email, String password) {
-    //TODO: implementar lógica de login
-    _token = 'asfasf.sfasfasf.sas2231as.asfasf';
+    //TODO: implementar lógica de registro
 
-    LocalStorage.prefs.setString('token', _token!);
-    LocalStorage.prefs.getString('token');
-    authStatus = AuthStatus.authenticated;
-    notifyListeners();
+    final data = {'correo': email, 'password': password};
 
-    NavigationServices.replaceTo(Flurorouter.dashboardRoute);
+    CafeApi.httpPost('/auth/login', data)
+        .then((json) {
+          final authResponse = AuthResponse.fromMap(json);
+          this.user = authResponse.usuario;
+          _token = authResponse.token;
+
+          LocalStorage.prefs.setString('token', _token!);
+          LocalStorage.prefs.setString('nameUser', this.user!.nombre);
+          LocalStorage.prefs.getString('token');
+          LocalStorage.prefs.getString('nameUser');
+          authStatus = AuthStatus.authenticated;
+          NavigationServices.replaceTo(Flurorouter.dashboardRoute);
+          CafeApi.configureDio();
+          notifyListeners();
+        })
+        .catchError((e) {
+          //print('Error en el registro: $e');
+          NotificationsService.ShowSnackBarError('Error en el Login: $e');
+        });
   }
 
   register(String email, String password, String name) {
@@ -50,6 +64,8 @@ class AuthProvider extends ChangeNotifier {
           LocalStorage.prefs.getString('nameUser');
           authStatus = AuthStatus.authenticated;
           NavigationServices.replaceTo(Flurorouter.dashboardRoute);
+
+          CafeApi.configureDio();
           notifyListeners();
         })
         .catchError((e) {
@@ -70,7 +86,8 @@ class AuthProvider extends ChangeNotifier {
   }
 
   Future<bool> isAuthenticated() async {
-    await Future.delayed(const Duration(seconds: 1));
+    //await Future.delayed(const Duration(seconds: 1));
+
     final token = LocalStorage.prefs.getString('token');
 
     if (token == null) {
@@ -81,9 +98,26 @@ class AuthProvider extends ChangeNotifier {
 
     //TODO: validar el token con el backend
 
-    await Future.delayed(const Duration(seconds: 1));
-    authStatus = AuthStatus.authenticated;
-    notifyListeners();
-    return true;
+    try {
+      final resp = await CafeApi.httpGet('/auth');
+
+      final authResponse = AuthResponse.fromMap(resp);
+      this.user = authResponse.usuario;
+      _token = authResponse.token;
+
+      LocalStorage.prefs.setString('token', _token!);
+      LocalStorage.prefs.setString('nameUser', this.user!.nombre);
+
+      authStatus = AuthStatus.authenticated;
+      CafeApi.configureDio();
+      notifyListeners();
+      return true;
+    } catch (e) {
+      NotificationsService.ShowSnackBarError('Token no válido: $e');
+      //print('Token no válido: $e');
+      logout();
+      return false;
+    }
+    //********************** */
   }
 }
