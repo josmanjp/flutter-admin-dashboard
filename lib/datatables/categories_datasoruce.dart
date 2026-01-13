@@ -6,7 +6,10 @@ class CategoriesDTS extends DataTableSource {
     // TODO: implement getRow
     return DataRow.byIndex(
       index: index,
-
+      onSelectChanged: (seleccionado) {
+        // Aquí puedes manejar el clic en la fila si lo deseas
+        print("Fila seleccionada index: $index, seleccionado: $seleccionado");
+      },
       cells: [
         DataCell(
           Text('Cell#1 index  $index'),

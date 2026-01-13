@@ -23,6 +23,7 @@ class _CategoriesViewState extends State<CategoriesView> {
           Text('Categories View', style: CustomLabels.h1),
           SizedBox(height: 10),
           PaginatedDataTable(
+            showCheckboxColumn: false,
             columns: [
               DataColumn(label: Text('ID')),
               DataColumn(label: Text('Category Name')),
